@@ -1,0 +1,62 @@
+#!/bin/bash -e
+
+#FIXME share this with setup script
+JDK_PATH=jdk1.8.0_74
+
+export JAVA_HOME=${OPENSHIFT_DATA_DIR}${JDK_PATH}
+#export PATH=$JAVA_HOME/bin:${OPENSHIFT_DATA_DIR}/scala/bin/:${OPENSHIFT_DATA_DIR}/sbt/bin/:$PATH
+
+function start {
+    cd $OPENSHIFT_REPO_DIR
+    nohup ./start.sh >> $OPENSHIFT_SCALA_LOG_DIR/scala.log 2>&1  &
+}
+
+function stop {
+    killall java || true
+}
+
+function restart {
+    stop
+    start
+}
+
+function build {
+    # Workaround for failure in npm install when a package in package.json
+    # points to a git commit.
+    # This issue occurs because we are running in the context of a
+    # git post receive-hook
+    unset GIT_DIR
+    unset GIT_WORK_TREE
+
+    cd $OPENSHIFT_REPO_DIR
+    activator compile
+}
+
+function tidy {
+    shopt -s dotglob
+    rm -rf $OPENSHIFT_SCALA_LOG_DIR/*
+    rm -rf $OPENSHIFT_TMP_DIR/*
+
+    cd $OPENSHIFT_REPO_DIR
+    activator clean
+}
+
+function catchall {
+    echo ""
+}
+
+case "$1" in
+  start)       start ;;
+  stop)        stop ;;
+  restart)     restart ;;
+  status)      status ;;
+  reload)      catchall ;;
+  tidy)        tidy ;;
+  pre-build)   catchall ;;
+  build)       build ;;
+  deploy)      catchall ;;
+  post-deploy) catchall ;;
+  *)           exit 0
+esac
+
+exit 0
