@@ -1,7 +1,7 @@
 Name: scala
 Cartridge-Short-Name: SCALA
 Display-Name: Scala Cartridge
-Description: "A scala cartridge"
+Description: "A scala cartridge using type safe activator embeded within your project"
 Version: '0.6.3'
 License: "MIT"
 Vendor: google
