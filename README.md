@@ -2,7 +2,7 @@
 
 ## Use it
 
-In OpenShift, choose a downloaded cartridge, with the following URL : http://cartreflect-claytondev.rhcloud.com/reflect?github=mhashimm/openshift-cartridge-scala
+In OpenShift, choose a downloaded cartridge, with the following URL : http://cartreflect-claytondev.rhcloud.com/reflect?github=mhashimm/openshift-cartridge-typesafe-activator
 
 On git push, `./activator compile` will be called, then the script `start.sh` at the root of your repo will be called.
 
