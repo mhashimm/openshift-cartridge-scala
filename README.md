@@ -4,12 +4,12 @@
 
 In OpenShift, choose a downloaded cartridge, with the following URL : http://cartreflect-claytondev.rhcloud.com/reflect?github=mhashimm/openshift-cartridge-typesafe-activator
 
-On git push, `./activator compile` will be called, then the script `start.sh` at the root of your repo will be called.
+On git push, `sbt compile` will be called, then the script `start.sh` at the root of your repo will be called.
 
 Example of `start.sh` script:
 
     #!/bin/bash
-    ./activator run
+    sbt run
 
 Make sure `start.sh` is an executable file: `chmod +x start.sh`
 
